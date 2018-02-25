@@ -3,10 +3,9 @@
   <groupId>com.github.kugelblitz</groupId>
   <artifactId>jjschema-maven-plugin</artifactId>
   <versioning>
-    <latest>1.0-SNAPSHOT</latest>
     <versions>
       <version>1.0-SNAPSHOT</version>
     </versions>
-    <lastUpdated>20180225173803</lastUpdated>
+    <lastUpdated>20180225174841</lastUpdated>
   </versioning>
 </metadata>
