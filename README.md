@@ -4,9 +4,26 @@ jjschema-maven-plugin
 A maven plugin for automatic json schema generating 
 providing by [jjschema](https://github.com/reinert/JJSchema) library
 
+Versions
+----------------
+**1.0-SNAPSHOT**:
+- basic functionality. Plugin seeks annotated classes in the dtoPackage 
+and generates schemas for those classes which have class @Attributes annotation.
+
+
 Usage
 ----------------
+- Add jjschema dependency to your project
+```xml
+<dependency>
+    <groupId>com.github.reinert</groupId>
+    <artifactId>jjschema</artifactId>
+    <version>1.10</version>
+</dependency>
+```
 
+
+- Add plugin dependency
 ```xml
 <plugin>
     <groupId>com.github.kugelblitz</groupId>
@@ -33,11 +50,45 @@ Usage
 
 **targetDirectory** - where schema filed should be
 
-Version
-----------------
-**1.0-SNAPSHOT**:
-- basic functionality. Plugin seeks annotated classes in the dtoPackage 
-and generates schemas for those classes which have class @Attributes annotation.
+- Annotate your POJO class
+
+```java
+package com.exmaple.dtopackage;
+
+import com.github.reinert.jjschema.Attributes;
+
+@Attributes(title = "root",additionalProperties = false)
+public class SampleDto {
+    @Attributes(required = true, title = "stringParam"
+    )
+    private String stringParam;
+    
+    public String getStringParam() { 
+        return this.stringParam; 
+    }
+    
+    public void setStringParam(String stringParam) {
+        this.stringParam = stringParam; 
+    }
+}
+```
+- run mvn clean package and get a schema in target/schemas
+```json
+{
+  "type": "object",
+  "description": "root",
+  "title": "root",
+  "additionalProperties": false,
+  "properties": {
+    "stringParam": {
+      "type": "string",
+      "title": "stringParam"
+    }
+  },
+  "required": ["stringParam"],
+  "$schema": "http://json-schema.org/draft-04/schema#"
+}
+```
 
 TODO
 ----------------
