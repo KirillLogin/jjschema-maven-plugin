@@ -1,6 +1,4 @@
-[![Build Status](https://travis-ci.org/KirillLogin/jjschema-maven-plugin.svg?branch=develop)](https://travis-ci.org/KirillLogin/jjschema-maven-plugin)
-
-jjschema-maven-plugin
+jjschema-maven-plugin [![Build Status](https://travis-ci.org/KirillLogin/jjschema-maven-plugin.svg?branch=develop)](https://travis-ci.org/KirillLogin/jjschema-maven-plugin)
 ===============
 
 A maven plugin for automatic json schema generating 
