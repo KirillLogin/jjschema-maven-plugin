@@ -5,9 +5,7 @@ import org.junit.Test;
 
 import java.io.File;
 
-import static org.junit.Assert.*;
-
-public class SchemagenTest extends AbstractMojoTestCase {
+public class SchemagenMojoTest extends AbstractMojoTestCase {
     /** {@inheritDoc} */
     protected void setUp() throws Exception
     {
@@ -28,8 +26,8 @@ public class SchemagenTest extends AbstractMojoTestCase {
         assertNotNull(pom);
         assertTrue(pom.exists());
 
-        Schemagen schemagen = new Schemagen();
-        schemagen = (Schemagen) configureMojo(schemagen, extractPluginConfiguration("jjschema-maven-plugin", pom));
+        SchemagenMojo schemagen = new SchemagenMojo();
+        schemagen = (SchemagenMojo) configureMojo(schemagen, extractPluginConfiguration("jjschema-maven-plugin", pom));
         assertNotNull(schemagen);
         schemagen.execute();
     }

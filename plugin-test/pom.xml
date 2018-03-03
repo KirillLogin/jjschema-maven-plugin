@@ -2,13 +2,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
     <modelVersion>4.0.0</modelVersion>
 
-    <packaging>jar</packaging>
-
     <groupId>com.github.kugelblitz</groupId>
-    <artifactId>json-dto-test</artifactId>
+    <artifactId>plugin-test</artifactId>
     <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <jjschema-maven-plugin.version>1.0-SNAPSHOT</jjschema-maven-plugin.version>
+    </properties>
 
     <dependencies>
         <dependency>
@@ -35,22 +38,22 @@
             <plugin>
                 <groupId>com.github.kugelblitz</groupId>
                 <artifactId>jjschema-maven-plugin</artifactId>
-                <version>1.0-SNAPSHOT</version>
+                <version>${jjschema-maven-plugin.version}</version>
                 <configuration>
                     <dtoPackage>com.github.jjschemaplugin.dto</dtoPackage>
-                    <!--Env variable not working in test. Please write path literally-->
-                    <workingDirectory>D:\Git\jjschema-maven-plugin\src\test\resources\unit\json-dto-test\target\classes\</workingDirectory>
-                    <targetDirectory>D:\Git\jjschema-maven-plugin\src\test\resources\unit\json-dto-test\target\schemas\</targetDirectory>
+                    <workingDirectory>${project.build.directory}</workingDirectory>
                 </configuration>
                 <executions>
                     <execution>
+                        <phase>compile</phase>
                         <goals>
                             <goal>schemagen</goal>
                         </goals>
-                        <phase>compile</phase>
                     </execution>
                 </executions>
             </plugin>
         </plugins>
     </build>
+
+
 </project>
