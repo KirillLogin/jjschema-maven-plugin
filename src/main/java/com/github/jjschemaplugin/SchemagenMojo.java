@@ -44,7 +44,7 @@ public class SchemagenMojo extends AbstractMojo {
         return path.replaceAll("/", "\\\\");
     }
 
-    private void scanAndProcessClassesInDir(File file){
+    private void scanAndProcessClassesInDir(File file) throws MojoExecutionException {
         if(file.isDirectory()){
             File[] files = file.listFiles();
             if(files == null)
@@ -58,11 +58,7 @@ public class SchemagenMojo extends AbstractMojo {
     }
 
     //TODO перенести обработку исключения в подходящее место
-    private void generateSchemaFromClass(File classFile){
-        try {
-            schemaGenerator.generate(classFile);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+    private void generateSchemaFromClass(File classFile) throws MojoExecutionException {
+        schemaGenerator.generate(classFile);
     }
 }

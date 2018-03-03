@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.github.reinert.jjschema.Attributes;
 import com.github.reinert.jjschema.v1.JsonSchemaFactory;
 import com.github.reinert.jjschema.v1.JsonSchemaV4Factory;
+import org.apache.maven.plugin.MojoExecutionException;
 
 import java.io.*;
 import java.lang.annotation.Annotation;
@@ -32,21 +33,18 @@ public class SchemaGenerator {
         }
     }
 
-    public void generate(File classFile) throws ClassNotFoundException {
+    public void generate(File classFile) throws MojoExecutionException {
         String classPath = getClasspathFromPath(classFile);
-        Class targetClass = classLoader.loadClass(classPath);
+        Class targetClass = null;
+        try {
+            targetClass = classLoader.loadClass(classPath);
+        } catch (ClassNotFoundException e) {
+            throw new MojoExecutionException(this, "ClassNotFoundException", e.getMessage());
+        }
         if(isJjchemaAnnotated(targetClass)) {
-            try {
-                makeSchemaFile(targetClass);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            makeSchemaFile(targetClass);
         }
 
-    }
-
-    private String getTargetSchemaDirectory(String workingDirectory) {
-        return null;
     }
 
     //TODO придумать что-то со стрингбилдером
@@ -63,10 +61,8 @@ public class SchemaGenerator {
         return attributes != null && attributes.length > 0;
     }
 
-    private void makeSchemaFile(Class targetClass) throws IOException {
-        boolean isDirCreated = new File(targetSchemaDirectory).mkdirs();
-        if(!isDirCreated)
-            return;
+    private void makeSchemaFile(Class targetClass) throws MojoExecutionException {
+        new File(targetSchemaDirectory).mkdirs();
 
         String targetFilePath = targetSchemaDirectory.concat(targetClass.getSimpleName()).concat(".json");
         JsonNode schemaOfClass = schemaFactory.createSchema(targetClass);
@@ -74,8 +70,7 @@ public class SchemaGenerator {
         try (Writer out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(targetFilePath), "UTF-8"))) {
             out.write(schemaOfClass.toString());
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new MojoExecutionException(this, "IOException", e.getMessage());
         }
-        System.out.println(schemaOfClass);
     }
 }
