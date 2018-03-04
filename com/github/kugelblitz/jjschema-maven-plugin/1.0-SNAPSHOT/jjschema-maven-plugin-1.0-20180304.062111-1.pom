@@ -10,13 +10,9 @@
     <artifactId>jjschema-maven-plugin</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <modules>
-        <!--<module>plugin-test</module>-->
-        <!--<module>src/test/resources/unit/json-dto-test</module>-->
-    </modules>
-
     <properties>
         <github.global.server>github</github.global.server>
+        <jjschema-maven-plugin.version>1.0-SNAPSHOT</jjschema-maven-plugin.version>
     </properties>
 
     <dependencies>
