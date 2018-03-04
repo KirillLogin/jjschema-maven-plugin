@@ -40,8 +40,9 @@
                 <artifactId>jjschema-maven-plugin</artifactId>
                 <version>${jjschema-maven-plugin.version}</version>
                 <configuration>
-                    <dtoPackage>com.github.jjschemaplugin.dto</dtoPackage>
-                    <workingDirectory>${project.build.directory}</workingDirectory>
+                    <dtoPackage>dto</dtoPackage>
+                    <workingDirectory>${project.build.directory}/classes/</workingDirectory>
+                    <targetDirectory>${project.build.directory}/schemas/</targetDirectory>
                 </configuration>
                 <executions>
                     <execution>

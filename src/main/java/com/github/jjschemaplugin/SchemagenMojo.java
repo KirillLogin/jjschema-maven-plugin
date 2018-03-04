@@ -4,14 +4,10 @@ package com.github.jjschemaplugin;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
-import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
-import org.apache.maven.plugins.annotations.ResolutionScope;
 
 import java.io.File;
-import java.net.URL;
-import java.net.URLClassLoader;
 
 
 @Mojo(name = "schemagen")
@@ -29,19 +25,23 @@ public class SchemagenMojo extends AbstractMojo {
     private SchemaGenerator schemaGenerator;
 
     public void execute() throws MojoExecutionException, MojoFailureException {
-        dtoPackage = normalizePackage(dtoPackage);
-        workingDirectory = normalizePackage(workingDirectory);
-        targetDirectory = normalizePackage(targetDirectory);
+        normalizeInputParameters();;
 
         schemaGenerator = new SchemaGenerator(workingDirectory, targetDirectory);
 
-        String dtoDirectory = workingDirectory.concat(dtoPackage.replaceAll("\\.", "\\\\"));
+        String dtoDirectory = workingDirectory.concat(dtoPackage);
 
         scanAndProcessClassesInDir(new File(dtoDirectory));
     }
 
-    private String normalizePackage(String path){
-        return path.replaceAll("/", "\\\\");
+    private void normalizeInputParameters(){
+        dtoPackage = normalizePath(dtoPackage);
+        workingDirectory = normalizePath(workingDirectory);
+        targetDirectory = normalizePath(targetDirectory);
+    }
+
+    private String normalizePath(String path){
+        return path.replaceAll("/", "\\\\").replaceAll("\\.", "\\\\");
     }
 
     private void scanAndProcessClassesInDir(File file) throws MojoExecutionException {

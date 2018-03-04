@@ -35,13 +35,16 @@ public class SchemaGenerator {
 
     public void generate(File classFile) throws MojoExecutionException {
         String classPath = getClasspathFromPath(classFile);
+
         Class targetClass = null;
+        Class attributesClass = null;
         try {
             targetClass = classLoader.loadClass(classPath);
+            attributesClass = classLoader.loadClass("com.github.reinert.jjschema.Attributes");
         } catch (ClassNotFoundException e) {
             throw new MojoExecutionException(this, "ClassNotFoundException", e.getMessage());
         }
-        if(isJjchemaAnnotated(targetClass)) {
+        if(isJjchemaAnnotated(targetClass, attributesClass)) {
             makeSchemaFile(targetClass);
         }
 
@@ -56,8 +59,23 @@ public class SchemaGenerator {
         return  classPath;
     }
 
-    private boolean isJjchemaAnnotated(Class targetClass) {
+    //TODO разобраться с аннотациями
+    private boolean isJjchemaAnnotated(Class targetClass, Class secondClass) {
+        Field[] fields = targetClass.getDeclaredFields();
+        System.out.println(fields.length);
+
+        Method[] methods = targetClass.getDeclaredMethods();
+        System.out.println(methods.length);
+
+        Annotation[] annotations = targetClass.getDeclaredAnnotations();
+        System.out.println(annotations.length);
+
+
+        System.out.println(targetClass.isAnnotationPresent(secondClass));
+
         Attributes[] attributes = (Attributes[])targetClass.getDeclaredAnnotationsByType(Attributes.class);
+        System.out.println(attributes.length);
+
         return attributes != null && attributes.length > 0;
     }
 
