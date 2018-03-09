@@ -13,6 +13,7 @@
     <properties>
         <github.global.server>github</github.global.server>
         <jjschema-maven-plugin.version>1.0-SNAPSHOT</jjschema-maven-plugin.version>
+        <qdox.version>2.0-M7</qdox.version>
     </properties>
 
     <dependencies>
@@ -43,6 +44,12 @@
             <artifactId>maven-plugin-annotations</artifactId>
             <version>3.4</version>
             <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.thoughtworks.qdox</groupId>
+            <artifactId>qdox</artifactId>
+            <version>${qdox.version}</version>
         </dependency>
 
         <dependency>
