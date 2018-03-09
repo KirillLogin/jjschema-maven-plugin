@@ -2,13 +2,12 @@ jjschema-maven-plugin [![Build Status](https://travis-ci.org/KirillLogin/jjschem
 ===============
 
 A maven plugin for automatic json schema generating 
-providing by [jjschema](https://github.com/reinert/JJSchema) library
+providing by [jjschema](https://github.com/reinert/JJSchema) library.
 
 Versions
 ----------------
 **1.0-SNAPSHOT**:
-- basic functionality. Plugin seeks annotated classes in the dtoPackage 
-and generates schemas for those classes which have class @Attributes annotation.
+- basic functionality. Plugin loads all the classes in the specified package and generates JSON schemas from its.
 
 
 Usage
@@ -31,8 +30,8 @@ Usage
     <version>${jjschema-maven-plugin.version}</version>
     <configuration>
         <dtoPackage>com.exmaple.dtopackage</dtoPackage>
-        <workingDirectory>${project.build.directory}\\target\\classes\\</workingDirectory>
-        <targetDirectory>${project.build.directory}\\target\\schemas</targetDirectory>
+        <workingDirectory>${project.build.directory}\\classes\\</workingDirectory>
+        <targetDirectory>${project.build.directory}\\schemas</targetDirectory>
     </configuration>
     <executions>
         <execution>
@@ -92,6 +91,7 @@ public class SampleDto {
 
 TODO
 ----------------
+- generates only jjschema-annotated classes
 - tests
 - mistake proofing of plugin config
 - generating schemas with keepeing dtoPackage inner package structure
